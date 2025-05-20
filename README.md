@@ -34,45 +34,44 @@ A Blank Document opens up into which the following source code can be typed down
 
 ## Source Code – Using Case Statement :
 
-module 
-
-alu_32bit_case(y,a,b,f);
+module alu_32bit_case(y,a,b,f);
 
 input [31:0]a;
 
 input [31:0]b;
 
-input [2:0]f; 
+input [2:0]f;
 
-output reg [31:0]y; 
+output reg [31:0]y;
 
 always@(*)
 
-begin 
+begin
 
 case(f)
 
-3'b000:y=a&b; //AND Operation 
+3'b000:y=a&b; //AND Operation
 
-3'b001:y=a|b; //OR Operation 
+3'b001:y=a|b; //OR Operation
 
-3'b010:y=~(a&b); //NAND
+3'b010:y=~(a&b); //NAND Operation
 
-Operation 3'b011:y=~(a|b); //NOR
+3'b011:y=~(a|b); //NOR Operation
 
-Operation 3'b010:y=a+b;
+3'b100:y=a^b; //XOR Operation
 
-//Addition 3'b011:y=a-b;
+3'b101:y=~(a^b); //XNOR Operation
 
-//Subtraction 3'b100:y=a*b;
+3'b110:y=~a; //NOT of a
 
-//Multiply default:y=32'bx;
+3'b111:y=~b; //NOT of b
 
-endcase 
+endcase
 
-end 
+end
 
 endmodule
+
 
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
@@ -82,7 +81,7 @@ Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.v
 
 ## Test Bench :
 
-module alu_32bit_tb_case; 
+module alu_32bit_tb_case;
 
 reg [31:0]a;
 
@@ -92,33 +91,38 @@ reg [2:0]f;
 
 wire [31:0]y;
 
-alu_32bit_case test2(.y(y),.a(a),.b(b),.f(f)); 
+alu_32bit_case test2(.y(y),.a(a),.b(b),.f(f));
 
 initial
 
-begin 
+begin
 
-a=32'h00000000; 
+a=32'h00000000;
 
-b=32'hFFFFFFF
+b=32'h10101010;
 
-F; #10
-
-f=3'b000;
+#10 f=3'b000;
 
 #10 f=3'b001;
 
 #10 f=3'b010;
 
+#10 f=3'b011;
+
 #10 f=3'b100;
 
-end 
+#10 f=3'b101;
 
-initial
+#10 f=3'b110;
 
-#50 $finish; 
+#10 f=3'b111;
+
+#50 $finish;
+
+end
 
 endmodule
+
 
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
